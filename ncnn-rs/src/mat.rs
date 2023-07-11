@@ -1,7 +1,7 @@
 use crate::allocator::Allocator;
 use core::fmt;
 use ncnn_bind::*;
-use std::os::raw::c_void;
+use std::{os::raw::c_void};
 
 const PIXEL_CONVERT_SHIFT: u32 = 16;
 
@@ -349,12 +349,30 @@ impl Mat {
         })
     }
 
-    pub fn substract_mean_normalize(&mut self, mean_vals: &[f32], norm_vals: &[f32]) {
+    pub fn substract_mean_normalize(
+        &mut self,
+        mean_vals: Option<&[f32]>,
+        norm_vals: Option<&[f32]>,
+    ) {
         let channels = self.c() as usize;
-        assert_eq!(mean_vals.len(), channels);
-        assert_eq!(norm_vals.len(), channels);
+
+        let mean_vals = match mean_vals {
+            Some(vals) => {
+                assert!(vals.len() >= channels);
+                vals.as_ptr()
+            }
+            None => core::ptr::null(),
+        };
+        let norm_vals = match norm_vals {
+            Some(vals) => {
+                assert!(vals.len() >= channels);
+                vals.as_ptr()
+            }
+            None => core::ptr::null(),
+        };
+
         unsafe {
-            ncnn_mat_substract_mean_normalize(self.ptr, mean_vals.as_ptr(), norm_vals.as_ptr())
+            ncnn_mat_substract_mean_normalize(self.ptr, mean_vals, norm_vals);
         }
     }
 
