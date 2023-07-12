@@ -4,6 +4,7 @@ mod extractor;
 mod mat;
 mod net;
 mod option;
+mod layer;
 
 pub use allocator::*;
 pub use datareader::*;
@@ -11,6 +12,7 @@ pub use extractor::*;
 pub use mat::*;
 pub use net::*;
 pub use option::*;
+pub use layer::*;
 
 pub use ncnn_bind as ffi;
 
