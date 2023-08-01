@@ -1,6 +1,6 @@
 use ncnn_rs::DataReader;
 use ncnn_rs::Mat;
-use ncnn_rs::Net;
+use ncnn_rs::NetBuilder;
 use ncnn_rs::Option as ncnn_option;
 use std::time;
 
@@ -13,16 +13,18 @@ fn benchmark(name: &str, mut mat_in: Mat, opt: &ncnn_option, out: &str) -> anyho
     let mut mat_out = Mat::new();
     mat_in.fill(1.0 as f32);
 
-    let mut net = Net::new();
     let path = param_path().join("../params").join(name);
     if !path.exists() {
         anyhow::bail!("param not found: {:?}", path)
     }
 
-    net.set_option(opt);
-    net.load_param(path.to_str().unwrap())?;
     let dr = DataReader::empty();
-    net.load_model_datareader(&dr)?;
+
+    let mut net = NetBuilder::new()?
+        .set_option(opt)
+        .set_param_path(path)?
+        .set_model_datareader(dr)
+        .build()?;
 
     // warmup
     let mut ex_warmup = net.create_extractor();
