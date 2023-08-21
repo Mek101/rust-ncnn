@@ -6,3 +6,4 @@
 #![allow(deref_nullptr)]
 
 include!(concat!(env!("OUT_DIR"), "/bindings.rs"));
+include!(concat!(env!("OUT_DIR"), "/consts.rs"));

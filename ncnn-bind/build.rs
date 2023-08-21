@@ -3,7 +3,9 @@ use cmake::Config;
 
 use std::env;
 use std::fs;
+use std::fs::File;
 use std::io;
+use std::io::Write;
 use std::path::PathBuf;
 use std::process::Command;
 use std::str;
@@ -26,6 +28,13 @@ fn ncnn_src_dir() -> PathBuf {
 
 fn ncnn_tag() -> String {
     env::var("NCNN_TAG").unwrap_or(DEFAULT_NCNN_TAG.to_string())
+}
+
+fn ncnn_tag_version() -> u64 {
+    env::var("NCNN_TAG")
+        .unwrap_or(DEFAULT_NCNN_TAG.to_string())
+        .parse()
+        .unwrap()
 }
 
 fn fetch() -> io::Result<()> {
@@ -179,9 +188,6 @@ fn vulkan_mode() -> Option<VulkanMode> {
         cfg!(feature = "vulkan-system-glslang"),
         cfg!(feature = "vulkan-static-glslang"),
     ) {
-        (true, true, true) | (true, true, false) | (true, false, true) | (false, true, true) => {
-            panic!("Cannot specify more than one `vulkan*` feature")
-        }
         (true, false, false) => {
             if cfg!(windows) {
                 Some(VulkanMode::Static)
@@ -192,6 +198,7 @@ fn vulkan_mode() -> Option<VulkanMode> {
         (false, true, false) => Some(VulkanMode::System),
         (false, false, true) => Some(VulkanMode::Static),
         (false, false, false) => None,
+        _ => panic!("Cannot specify more than one `vulkan*` feature"),
     }
 }
 
@@ -259,7 +266,7 @@ fn build_ncnn() -> Vec<PathBuf> {
         fetch().unwrap();
         build().unwrap();
 
-        for suffix in ["lib", "lib64"].iter() {
+        for suffix in ["lib", "lib64"].into_iter() {
             println!(
                 "cargo:rustc-link-search=native={}",
                 output_dir().join(suffix).to_string_lossy()
@@ -287,16 +294,18 @@ fn build_ncnn() -> Vec<PathBuf> {
 }
 
 fn main() {
+    // Find the headers.
     let include_paths = if let Ok(vcpkg_lib) = vcpkg::find_package("ncnn") {
         vec![vcpkg_lib.include_paths[0].join("ncnn")]
     } else {
         build_ncnn()
     };
 
-    let header = search_include(&include_paths, "c_api.h");
+    let c_api_header = search_include(&include_paths, "c_api.h");
 
+    // Generate the bindings
     let bindings = bindgen::Builder::default()
-        .header(header)
+        .header(c_api_header)
         .allowlist_type("regex")
         .allowlist_function("ncnn.*")
         .allowlist_var("NCNN.*")
@@ -307,4 +316,13 @@ fn main() {
     bindings
         .write_to_file(output_dir().join("bindings.rs"))
         .expect("Couldn't write bindings!");
+
+    // Write the version
+    println!("cargo:rerun-if-env-changed=NCNN_TAG");
+    let dest = output_dir().join("consts.rs");
+
+    let out_file = File::create(&dest).expect("Cannot create consts file");
+    let size = ncnn_tag_version();
+
+    write!(&out_file, "pub const NCNN_TAG: u64 = {};", size).unwrap();
 }

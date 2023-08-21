@@ -26,5 +26,5 @@ libc = "0.2"
 
 [build-dependencies]
 cmake = "0.1"
-bindgen    = { version = "0.59.2", default-features = false, features = ["runtime"] }
+bindgen = { version = "0.59.2", default-features = false, features = ["runtime"] }
 vcpkg = "0.2.15"
