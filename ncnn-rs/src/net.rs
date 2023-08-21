@@ -102,10 +102,8 @@ impl NetBuilder {
 
 impl Default for NetBuilder {
     fn default() -> Self {
-        let ptr = unsafe { ncnn_net_create() };
-
         Self {
-            ptr: Some(ptr),
+            ptr: Some(unsafe { ncnn_net_create() }),
             param: LoadMethod::None,
             model: LoadMethod::None,
         }
@@ -130,8 +128,7 @@ unsafe impl Sync for Net {}
 
 impl Net {
     pub fn create_extractor(&mut self) -> Extractor<'_> {
-        let ptr = unsafe { ncnn_extractor_create(self.ptr) };
-        Extractor::from_ptr(ptr)
+        Extractor::from_ptr(unsafe { ncnn_extractor_create(self.ptr) })
     }
 }
 

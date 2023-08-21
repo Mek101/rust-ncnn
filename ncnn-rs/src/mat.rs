@@ -40,73 +40,73 @@ pub enum MatPixelType {
 
 impl MatPixelType {
     fn to_int(&self) -> i32 {
-        match self {
-            MatPixelType::Bgr => NCNN_MAT_PIXEL_BGR as _,
-            MatPixelType::Bgra => NCNN_MAT_PIXEL_BGRA as _,
-            MatPixelType::Gray => NCNN_MAT_PIXEL_GRAY as _,
-            MatPixelType::Rgb => NCNN_MAT_PIXEL_RGB as _,
-            MatPixelType::Rgba => NCNN_MAT_PIXEL_RGBA as _,
+        (match self {
+            MatPixelType::Bgr => NCNN_MAT_PIXEL_BGR,
+            MatPixelType::Bgra => NCNN_MAT_PIXEL_BGRA,
+            MatPixelType::Gray => NCNN_MAT_PIXEL_GRAY,
+            MatPixelType::Rgb => NCNN_MAT_PIXEL_RGB,
+            MatPixelType::Rgba => NCNN_MAT_PIXEL_RGBA,
             MatPixelType::RgbToBgr => {
-                (NCNN_MAT_PIXEL_RGB | (NCNN_MAT_PIXEL_BGR << PIXEL_CONVERT_SHIFT)) as _
+                NCNN_MAT_PIXEL_RGB | (NCNN_MAT_PIXEL_BGR << PIXEL_CONVERT_SHIFT)
             }
             MatPixelType::RgbToGray => {
-                (NCNN_MAT_PIXEL_RGB | (NCNN_MAT_PIXEL_GRAY << PIXEL_CONVERT_SHIFT)) as _
+                NCNN_MAT_PIXEL_RGB | (NCNN_MAT_PIXEL_GRAY << PIXEL_CONVERT_SHIFT)
             }
             MatPixelType::RgbToRgba => {
-                (NCNN_MAT_PIXEL_RGB | (NCNN_MAT_PIXEL_RGBA << PIXEL_CONVERT_SHIFT)) as _
+                NCNN_MAT_PIXEL_RGB | (NCNN_MAT_PIXEL_RGBA << PIXEL_CONVERT_SHIFT)
             }
             MatPixelType::RgbToBgra => {
-                (NCNN_MAT_PIXEL_RGB | (NCNN_MAT_PIXEL_BGRA << PIXEL_CONVERT_SHIFT)) as _
+                NCNN_MAT_PIXEL_RGB | (NCNN_MAT_PIXEL_BGRA << PIXEL_CONVERT_SHIFT)
             }
             MatPixelType::BgrToRgb => {
-                (NCNN_MAT_PIXEL_BGR | (NCNN_MAT_PIXEL_RGB << PIXEL_CONVERT_SHIFT)) as _
+                NCNN_MAT_PIXEL_BGR | (NCNN_MAT_PIXEL_RGB << PIXEL_CONVERT_SHIFT)
             }
             MatPixelType::BgrToGray => {
-                (NCNN_MAT_PIXEL_BGR | (NCNN_MAT_PIXEL_GRAY << PIXEL_CONVERT_SHIFT)) as _
+                NCNN_MAT_PIXEL_BGR | (NCNN_MAT_PIXEL_GRAY << PIXEL_CONVERT_SHIFT)
             }
             MatPixelType::BgrToRgba => {
-                (NCNN_MAT_PIXEL_BGR | (NCNN_MAT_PIXEL_RGBA << PIXEL_CONVERT_SHIFT)) as _
+                NCNN_MAT_PIXEL_BGR | (NCNN_MAT_PIXEL_RGBA << PIXEL_CONVERT_SHIFT)
             }
             MatPixelType::BgrToBgra => {
-                (NCNN_MAT_PIXEL_BGR | (NCNN_MAT_PIXEL_BGRA << PIXEL_CONVERT_SHIFT)) as _
+                NCNN_MAT_PIXEL_BGR | (NCNN_MAT_PIXEL_BGRA << PIXEL_CONVERT_SHIFT)
             }
             MatPixelType::GrayToRgb => {
-                (NCNN_MAT_PIXEL_GRAY | (NCNN_MAT_PIXEL_RGB << PIXEL_CONVERT_SHIFT)) as _
+                NCNN_MAT_PIXEL_GRAY | (NCNN_MAT_PIXEL_RGB << PIXEL_CONVERT_SHIFT)
             }
             MatPixelType::GrayToBgr => {
-                (NCNN_MAT_PIXEL_GRAY | (NCNN_MAT_PIXEL_BGR << PIXEL_CONVERT_SHIFT)) as _
+                NCNN_MAT_PIXEL_GRAY | (NCNN_MAT_PIXEL_BGR << PIXEL_CONVERT_SHIFT)
             }
             MatPixelType::GrayToRgba => {
-                (NCNN_MAT_PIXEL_GRAY | (NCNN_MAT_PIXEL_RGBA << PIXEL_CONVERT_SHIFT)) as _
+                NCNN_MAT_PIXEL_GRAY | (NCNN_MAT_PIXEL_RGBA << PIXEL_CONVERT_SHIFT)
             }
             MatPixelType::GrayToBgra => {
-                (NCNN_MAT_PIXEL_GRAY | (NCNN_MAT_PIXEL_BGRA << PIXEL_CONVERT_SHIFT)) as _
+                NCNN_MAT_PIXEL_GRAY | (NCNN_MAT_PIXEL_BGRA << PIXEL_CONVERT_SHIFT)
             }
             MatPixelType::RgbaToRgb => {
-                (NCNN_MAT_PIXEL_RGBA | (NCNN_MAT_PIXEL_RGB << PIXEL_CONVERT_SHIFT)) as _
+                NCNN_MAT_PIXEL_RGBA | (NCNN_MAT_PIXEL_RGB << PIXEL_CONVERT_SHIFT)
             }
             MatPixelType::RgbaToBgr => {
-                (NCNN_MAT_PIXEL_RGBA | (NCNN_MAT_PIXEL_BGR << PIXEL_CONVERT_SHIFT)) as _
+                NCNN_MAT_PIXEL_RGBA | (NCNN_MAT_PIXEL_BGR << PIXEL_CONVERT_SHIFT)
             }
             MatPixelType::RgbaToGray => {
-                (NCNN_MAT_PIXEL_RGBA | (NCNN_MAT_PIXEL_GRAY << PIXEL_CONVERT_SHIFT)) as _
+                NCNN_MAT_PIXEL_RGBA | (NCNN_MAT_PIXEL_GRAY << PIXEL_CONVERT_SHIFT)
             }
             MatPixelType::RgbaToBgra => {
-                (NCNN_MAT_PIXEL_RGBA | (NCNN_MAT_PIXEL_BGRA << PIXEL_CONVERT_SHIFT)) as _
+                NCNN_MAT_PIXEL_RGBA | (NCNN_MAT_PIXEL_BGRA << PIXEL_CONVERT_SHIFT)
             }
             MatPixelType::BgraToRgb => {
-                (NCNN_MAT_PIXEL_BGRA | (NCNN_MAT_PIXEL_RGB << PIXEL_CONVERT_SHIFT)) as _
+                NCNN_MAT_PIXEL_BGRA | (NCNN_MAT_PIXEL_RGB << PIXEL_CONVERT_SHIFT)
             }
             MatPixelType::BgraToBgr => {
-                (NCNN_MAT_PIXEL_BGRA | (NCNN_MAT_PIXEL_BGR << PIXEL_CONVERT_SHIFT)) as _
+                NCNN_MAT_PIXEL_BGRA | (NCNN_MAT_PIXEL_BGR << PIXEL_CONVERT_SHIFT)
             }
             MatPixelType::BgraToGray => {
-                (NCNN_MAT_PIXEL_BGRA | (NCNN_MAT_PIXEL_GRAY << PIXEL_CONVERT_SHIFT)) as _
+                NCNN_MAT_PIXEL_BGRA | (NCNN_MAT_PIXEL_GRAY << PIXEL_CONVERT_SHIFT)
             }
             MatPixelType::BgraToRgba => {
-                (NCNN_MAT_PIXEL_BGRA | (NCNN_MAT_PIXEL_RGBA << PIXEL_CONVERT_SHIFT)) as _
+                NCNN_MAT_PIXEL_BGRA | (NCNN_MAT_PIXEL_RGBA << PIXEL_CONVERT_SHIFT)
             }
-        }
+        }) as _
     }
 
     fn stride(&self) -> i32 {
@@ -158,6 +158,11 @@ impl MatBorderType {
     }
 }
 
+fn cast_into_i32(val: usize, name: &str) -> anyhow::Result<i32> {
+    val.try_into()
+        .map_err(|_| anyhow::format_err!("Invalid {} size", name))
+}
+
 pub struct Mat {
     ptr: ncnn_mat_t,
 }
@@ -172,20 +177,25 @@ impl Mat {
     }
 
     /// Constructs an empty 1D matrix.
-    pub fn new_1d(w: i32, alloc: Option<&Allocator>) -> Self {
-        Self {
+    pub fn new_1d(width: usize, alloc: Option<&Allocator>) -> anyhow::Result<Self> {
+        let w = cast_into_i32(width, "width")?;
+
+        Ok(Self {
             ptr: unsafe {
                 ncnn_mat_create_1d(
                     w,
                     alloc.map(Allocator::ptr).unwrap_or(core::ptr::null_mut()),
                 )
             },
-        }
+        })
     }
 
     /// Constructs an empty 2D matrix.
-    pub fn new_2d(w: i32, h: i32, alloc: Option<&Allocator>) -> Self {
-        Self {
+    pub fn new_2d(width: usize, height: usize, alloc: Option<&Allocator>) -> anyhow::Result<Self> {
+        let w = cast_into_i32(width, "width")?;
+        let h = cast_into_i32(height, "height")?;
+
+        Ok(Self {
             ptr: unsafe {
                 ncnn_mat_create_2d(
                     w,
@@ -193,12 +203,21 @@ impl Mat {
                     alloc.map(Allocator::ptr).unwrap_or(core::ptr::null_mut()),
                 )
             },
-        }
+        })
     }
 
     /// Constructs an empty 3D matrix.
-    pub fn new_3d(w: i32, h: i32, c: i32, alloc: Option<&Allocator>) -> Self {
-        Self {
+    pub fn new_3d(
+        width: usize,
+        height: usize,
+        channels: usize,
+        alloc: Option<&Allocator>,
+    ) -> anyhow::Result<Self> {
+        let w = cast_into_i32(width, "width")?;
+        let h = cast_into_i32(height, "height")?;
+        let c = cast_into_i32(channels, "channels")?;
+
+        Ok(Self {
             ptr: unsafe {
                 ncnn_mat_create_3d(
                     w,
@@ -207,12 +226,23 @@ impl Mat {
                     alloc.map(Allocator::ptr).unwrap_or(core::ptr::null_mut()),
                 )
             },
-        }
+        })
     }
 
     /// Constructs an empty 4D matrix.
-    pub fn new_4d(w: i32, h: i32, d: i32, c: i32, alloc: Option<&Allocator>) -> Self {
-        Self {
+    pub fn new_4d(
+        width: usize,
+        height: usize,
+        channels: usize,
+        depth: usize,
+        alloc: Option<&Allocator>,
+    ) -> anyhow::Result<Self> {
+        let w = cast_into_i32(width, "width")?;
+        let h = cast_into_i32(height, "height")?;
+        let c = cast_into_i32(channels, "channels")?;
+        let d = cast_into_i32(depth, "depth")?;
+
+        Ok(Self {
             ptr: unsafe {
                 ncnn_mat_create_4d(
                     w,
@@ -222,7 +252,7 @@ impl Mat {
                     alloc.map(Allocator::ptr).unwrap_or(core::ptr::null_mut()),
                 )
             },
-        }
+        })
     }
 
     /// Constructs 1D matrix with a given raw data.
@@ -230,14 +260,20 @@ impl Mat {
     /// # Safety
     ///
     /// Data pointer must not be aliased, it must be valid for the entire lifetime of Mat and it must be of correct size.
-    pub unsafe fn new_external_1d(w: i32, data: *mut c_void, alloc: Option<&Allocator>) -> Self {
-        Self {
+    pub unsafe fn new_external_1d(
+        width: usize,
+        data: *mut c_void,
+        alloc: Option<&Allocator>,
+    ) -> anyhow::Result<Self> {
+        let w = cast_into_i32(width, "width")?;
+
+        Ok(Self {
             ptr: ncnn_mat_create_external_1d(
                 w,
                 data,
                 alloc.map(Allocator::ptr).unwrap_or(core::ptr::null_mut()),
             ),
-        }
+        })
     }
 
     /// Constructs 2D matrix with a given raw data.
@@ -246,19 +282,22 @@ impl Mat {
     ///
     /// Data pointer must not be aliased, it must be valid for the entire lifetime of Mat and it must be of correct size.
     pub unsafe fn new_external_2d(
-        w: i32,
-        h: i32,
+        width: usize,
+        height: usize,
         data: *mut c_void,
         alloc: Option<&Allocator>,
-    ) -> Self {
-        Self {
+    ) -> anyhow::Result<Self> {
+        let w = cast_into_i32(width, "width")?;
+        let h = cast_into_i32(height, "height")?;
+
+        Ok(Self {
             ptr: ncnn_mat_create_external_2d(
                 w,
                 h,
                 data,
                 alloc.map(Allocator::ptr).unwrap_or(core::ptr::null_mut()),
             ),
-        }
+        })
     }
 
     /// Constructs 3D matrix with a given raw data.
@@ -267,13 +306,17 @@ impl Mat {
     ///
     /// Data pointer must not be aliased, it must be valid for the entire lifetime of Mat and it must be of correct size.
     pub unsafe fn new_external_3d(
-        w: i32,
-        h: i32,
-        c: i32,
+        width: usize,
+        height: usize,
+        channels: usize,
         data: *mut c_void,
         alloc: Option<&Allocator>,
-    ) -> Self {
-        Self {
+    ) -> anyhow::Result<Self> {
+        let w = cast_into_i32(width, "width")?;
+        let h = cast_into_i32(height, "height")?;
+        let c = cast_into_i32(channels, "channels")?;
+
+        Ok(Self {
             ptr: ncnn_mat_create_external_3d(
                 w,
                 h,
@@ -281,7 +324,7 @@ impl Mat {
                 data,
                 alloc.map(Allocator::ptr).unwrap_or(core::ptr::null_mut()),
             ),
-        }
+        })
     }
 
     /// Constructs 4D matrix with a given raw data.
@@ -290,14 +333,19 @@ impl Mat {
     ///
     /// Data pointer must not be aliased, it must be valid for the entire lifetime of Mat and it must be of correct size.
     pub unsafe fn new_external_4d(
-        w: i32,
-        h: i32,
-        d: i32,
-        c: i32,
+        width: usize,
+        height: usize,
+        depth: usize,
+        channels: usize,
         data: *mut c_void,
         alloc: Option<&Allocator>,
-    ) -> Self {
-        Self {
+    ) -> anyhow::Result<Self> {
+        let w = cast_into_i32(width, "width")?;
+        let h = cast_into_i32(height, "height")?;
+        let c = cast_into_i32(channels, "channels")?;
+        let d = cast_into_i32(depth, "depth")?;
+
+        Ok(Self {
             ptr: ncnn_mat_create_external_4d(
                 w,
                 h,
@@ -306,17 +354,20 @@ impl Mat {
                 data,
                 alloc.map(Allocator::ptr).unwrap_or(core::ptr::null_mut()),
             ),
-        }
+        })
     }
 
     /// Constructs matrix from a pixel byte array
     pub fn from_pixels(
         data: &[u8],
         pixel_type: MatPixelType,
-        width: i32,
-        height: i32,
+        width: usize,
+        height: usize,
         alloc: Option<&Allocator>,
     ) -> anyhow::Result<Self> {
+        let width = cast_into_i32(width, "width")?;
+        let height = cast_into_i32(height, "height")?;
+
         let len = width * height * pixel_type.stride();
         anyhow::ensure!(
             data.len() >= len as _,
@@ -343,12 +394,17 @@ impl Mat {
     pub fn from_pixels_resize(
         data: &[u8],
         pixel_type: MatPixelType,
-        width: i32,
-        height: i32,
-        target_width: i32,
-        target_height: i32,
+        width: usize,
+        height: usize,
+        target_width: usize,
+        target_height: usize,
         alloc: Option<&Allocator>,
     ) -> anyhow::Result<Self> {
+        let width = cast_into_i32(width, "width")?;
+        let height = cast_into_i32(height, "height")?;
+        let target_width = cast_into_i32(target_width, "target_width")?;
+        let target_height = cast_into_i32(target_height, "target_height")?;
+
         let len = width * height * pixel_type.stride();
         anyhow::ensure!(
             data.len() >= len as _,
@@ -410,17 +466,21 @@ impl Mat {
     /// Add a padding border. Convenience method for copy_make_border.
     pub fn add_border(
         &mut self,
-        top: i32,
-        bottom: i32,
-        left: i32,
-        right: i32,
+        top: usize,
+        bottom: usize,
+        left: usize,
+        right: usize,
         border_type: MatBorderType,
         value: f32,
         opt: &crate::option::Option,
-    ) {
+    ) -> anyhow::Result<()> {
         unsafe {
             let src = self.ptr;
             let dst = ncnn_mat_create();
+            let top = cast_into_i32(top, "top")?;
+            let bottom = cast_into_i32(bottom, "bottom")?;
+            let left = cast_into_i32(left, "left")?;
+            let right = cast_into_i32(right, "right")?;
             let border_type = border_type.to_int();
             let opt = opt.ptr();
             ncnn_copy_make_border(src, dst, top, bottom, left, right, border_type, value, opt);
@@ -429,24 +489,32 @@ impl Mat {
 
             ncnn_mat_destroy(src);
         }
+
+        Ok(())
     }
 
     /// Add a padding border. Convenience method for copy_make_border_3d.
     pub fn add_border_3d(
         &mut self,
-        top: i32,
-        bottom: i32,
-        left: i32,
-        right: i32,
-        front: i32,
-        behind: i32,
+        top: usize,
+        bottom: usize,
+        left: usize,
+        right: usize,
+        front: usize,
+        behind: usize,
         border_type: MatBorderType,
         value: f32,
         opt: &crate::option::Option,
-    ) {
+    ) -> anyhow::Result<()> {
         unsafe {
             let src = self.ptr();
             let dst = ncnn_mat_create();
+            let top = cast_into_i32(top, "top")?;
+            let bottom = cast_into_i32(bottom, "bottom")?;
+            let left = cast_into_i32(left, "left")?;
+            let right = cast_into_i32(right, "right")?;
+            let front = cast_into_i32(front, "front")?;
+            let behind = cast_into_i32(behind, "behind")?;
             let border_type = border_type.to_int();
             let opt = opt.ptr();
 
@@ -468,19 +536,26 @@ impl Mat {
 
             ncnn_mat_destroy(src);
         }
+
+        Ok(())
     }
 
     pub fn cut_border(
         &mut self,
-        top: i32,
-        bottom: i32,
-        left: i32,
-        right: i32,
+        top: usize,
+        bottom: usize,
+        left: usize,
+        right: usize,
         opt: &crate::option::Option,
-    ) {
+    ) -> anyhow::Result<()> {
         unsafe {
             let src = self.ptr;
             let dst = ncnn_mat_create();
+            let top = cast_into_i32(top, "top")?;
+            let bottom = cast_into_i32(bottom, "bottom")?;
+            let left = cast_into_i32(left, "left")?;
+            let right = cast_into_i32(right, "right")?;
+
             let opt = opt.ptr();
 
             ncnn_copy_cut_border(src, dst, top, bottom, left, right, opt);
@@ -489,21 +564,29 @@ impl Mat {
 
             ncnn_mat_destroy(src);
         }
+
+        Ok(())
     }
 
     pub fn cut_border_3d(
         &mut self,
-        top: i32,
-        bottom: i32,
-        left: i32,
-        right: i32,
-        front: i32,
-        behind: i32,
+        top: usize,
+        bottom: usize,
+        left: usize,
+        right: usize,
+        front: usize,
+        behind: usize,
         opt: &crate::option::Option,
-    ) {
+    ) -> anyhow::Result<()> {
         unsafe {
             let src = self.ptr;
             let dst = ncnn_mat_create();
+            let top = cast_into_i32(top, "top")?;
+            let bottom = cast_into_i32(bottom, "bottom")?;
+            let left = cast_into_i32(left, "left")?;
+            let right = cast_into_i32(right, "right")?;
+            let front = cast_into_i32(front, "front")?;
+            let behind = cast_into_i32(behind, "behind")?;
             let opt = opt.ptr();
 
             ncnn_copy_cut_border_3d(src, dst, top, bottom, left, right, front, behind, opt);
@@ -512,6 +595,8 @@ impl Mat {
 
             ncnn_mat_destroy(src);
         }
+
+        Ok(())
     }
 
     /// Fills matrix with a given value.
@@ -520,44 +605,44 @@ impl Mat {
     }
 
     /// Returns number of matrix dimensions.
-    pub fn dimensions(&self) -> i32 {
-        unsafe { ncnn_mat_get_dims(self.ptr) }
+    pub fn dimensions(&self) -> usize {
+        unsafe { ncnn_mat_get_dims(self.ptr) as _ }
     }
 
     /// Returns matrix width.
-    pub fn width(&self) -> i32 {
-        unsafe { ncnn_mat_get_w(self.ptr) }
+    pub fn width(&self) -> usize {
+        unsafe { ncnn_mat_get_w(self.ptr) as _ }
     }
 
     /// Returns matrix height.
-    pub fn height(&self) -> i32 {
-        unsafe { ncnn_mat_get_h(self.ptr) }
+    pub fn height(&self) -> usize {
+        unsafe { ncnn_mat_get_h(self.ptr) as _ }
     }
 
     /// Returns matrix depth.
-    pub fn depth(&self) -> i32 {
-        unsafe { ncnn_mat_get_d(self.ptr) }
+    pub fn depth(&self) -> usize {
+        unsafe { ncnn_mat_get_d(self.ptr) as _ }
     }
 
     /// Returns matrix channels.
-    pub fn channels(&self) -> i32 {
-        unsafe { ncnn_mat_get_c(self.ptr) }
+    pub fn channels(&self) -> usize {
+        unsafe { ncnn_mat_get_c(self.ptr) as _ }
     }
 
-    pub fn element_size(&self) -> u64 {
-        (unsafe { ncnn_mat_get_elemsize(self.ptr) }) as u64
+    pub fn element_size(&self) -> usize {
+        unsafe { ncnn_mat_get_elemsize(self.ptr) as _ }
     }
 
-    pub fn element_packing(&self) -> i32 {
-        unsafe { ncnn_mat_get_elempack(self.ptr) }
+    pub fn element_packing(&self) -> usize {
+        unsafe { ncnn_mat_get_elempack(self.ptr) as _ }
     }
 
-    pub fn channel_step(&self) -> u64 {
-        unsafe { ncnn_mat_get_cstep(self.ptr) }
+    pub fn channel_step(&self) -> usize {
+        unsafe { ncnn_mat_get_cstep(self.ptr) as _ }
     }
 
     /// Pointer to raw matrix data
-    pub fn data(&self) -> *mut ::std::os::raw::c_void {
+    pub fn data(&self) -> *mut c_void {
         unsafe { ncnn_mat_get_data(self.ptr) }
     }
 
@@ -604,41 +689,53 @@ impl Drop for Mat {
 pub fn copy_make_border(
     src: &Mat,
     dst: &mut Mat,
-    top: i32,
-    bottom: i32,
-    left: i32,
-    right: i32,
+    top: usize,
+    bottom: usize,
+    left: usize,
+    right: usize,
     border_type: MatBorderType,
     value: f32,
     opt: &crate::option::Option,
-) {
+) -> anyhow::Result<()> {
     unsafe {
         let src = src.ptr();
         let dst = dst.mut_ptr();
+        let top = cast_into_i32(top, "top")?;
+        let bottom = cast_into_i32(bottom, "bottom")?;
+        let left = cast_into_i32(left, "left")?;
+        let right = cast_into_i32(right, "right")?;
         let border_type = border_type.to_int();
         let opt = opt.ptr();
 
         ncnn_copy_make_border(src, dst, top, bottom, left, right, border_type, value, opt);
     }
+
+    Ok(())
 }
 
 /// Add a 3d padding border to src's content, copying it in dst.
 pub fn copy_make_border_3d(
     src: &Mat,
     dst: &mut Mat,
-    top: i32,
-    bottom: i32,
-    left: i32,
-    right: i32,
-    front: i32,
-    behind: i32,
+    top: usize,
+    bottom: usize,
+    left: usize,
+    right: usize,
+    front: usize,
+    behind: usize,
     border_type: MatBorderType,
     value: f32,
     opt: &crate::option::Option,
-) {
+) -> anyhow::Result<()> {
     unsafe {
         let src = src.ptr();
         let dst = dst.mut_ptr();
+        let top = cast_into_i32(top, "top")?;
+        let bottom = cast_into_i32(bottom, "bottom")?;
+        let left = cast_into_i32(left, "left")?;
+        let right = cast_into_i32(right, "right")?;
+        let front = cast_into_i32(front, "front")?;
+        let behind = cast_into_i32(behind, "behind")?;
         let border_type = border_type.to_int();
         let opt = opt.ptr();
 
@@ -656,44 +753,60 @@ pub fn copy_make_border_3d(
             opt,
         );
     }
+
+    Ok(())
 }
 
 pub fn copy_cut_border(
     src: &Mat,
     dst: &mut Mat,
-    top: i32,
-    bottom: i32,
-    left: i32,
-    right: i32,
+    top: usize,
+    bottom: usize,
+    left: usize,
+    right: usize,
     opt: &crate::option::Option,
-) {
+) -> anyhow::Result<()> {
     unsafe {
         let src = src.ptr();
         let dst = dst.mut_ptr();
+        let top = cast_into_i32(top, "top")?;
+        let bottom = cast_into_i32(bottom, "bottom")?;
+        let left = cast_into_i32(left, "left")?;
+        let right = cast_into_i32(right, "right")?;
         let opt = opt.ptr();
 
         ncnn_copy_cut_border(src, dst, top, bottom, left, right, opt);
     }
+
+    Ok(())
 }
 
 pub fn copy_cut_border_3d(
     src: &Mat,
     dst: &mut Mat,
-    top: i32,
-    bottom: i32,
-    left: i32,
-    right: i32,
-    front: i32,
-    behind: i32,
+    top: usize,
+    bottom: usize,
+    left: usize,
+    right: usize,
+    front: usize,
+    behind: usize,
     opt: &crate::option::Option,
-) {
+) -> anyhow::Result<()> {
     unsafe {
         let src = src.ptr();
         let dst = dst.mut_ptr();
+        let top = cast_into_i32(top, "top")?;
+        let bottom = cast_into_i32(bottom, "bottom")?;
+        let left = cast_into_i32(left, "left")?;
+        let right = cast_into_i32(right, "right")?;
+        let front = cast_into_i32(front, "front")?;
+        let behind = cast_into_i32(behind, "behind")?;
         let opt = opt.ptr();
 
         ncnn_copy_cut_border_3d(src, dst, top, bottom, left, right, front, behind, opt);
     }
+
+    Ok(())
 }
 
 #[cfg(test)]
@@ -702,7 +815,7 @@ mod tests {
 
     #[test]
     fn basic_getter_and_setter() {
-        let m: Mat = Mat::new_3d(224, 224, 3, None);
+        let m = Mat::new_3d(224, 224, 3, None).unwrap();
         assert_eq!(224, m.height());
         assert_eq!(224, m.width());
         assert_eq!(3, m.channels());
