@@ -319,7 +319,7 @@ impl Mat {
     ) -> anyhow::Result<Self> {
         let len = width * height * pixel_type.stride();
         anyhow::ensure!(
-            data.len() != len as _,
+            data.len() >= len as _,
             "Expected data length {}, provided {}",
             len,
             data.len()
@@ -351,7 +351,7 @@ impl Mat {
     ) -> anyhow::Result<Self> {
         let len = width * height * pixel_type.stride();
         anyhow::ensure!(
-            data.len() != len as _,
+            data.len() >= len as _,
             "Expected data length {}, provided {}",
             len,
             data.len()
