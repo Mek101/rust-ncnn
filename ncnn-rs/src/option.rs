@@ -9,10 +9,7 @@ unsafe impl Send for Option {}
 
 impl Option {
     pub fn new() -> Option {
-        let ptr;
-        unsafe {
-            ptr = ncnn_option_create();
-        }
+        let ptr = unsafe { ncnn_option_create() };
         Option { ptr }
     }
 

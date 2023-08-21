@@ -9,8 +9,6 @@ homepage = "https://github.com/tpoisonooo/rust-ncnn"
 repository = "https://github.com/tpoisonooo/rust-ncnn"
 keywords = ["binding", "ncnn", "API"]
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
 [dependencies]
 anyhow = "1"
 ncnn-bind = { path = "../ncnn-bind" }
@@ -21,7 +19,6 @@ libc  = "0.2"
 static = [ "ncnn-bind/static" ]
 # Explicitly use dynamic linking
 dynamic = [ "ncnn-bind/dynamic" ]
-
 # Enable vulkan backend
 vulkan = [ "ncnn-bind/vulkan" ]
 # Enable vulkan backend using a system provided glslang
