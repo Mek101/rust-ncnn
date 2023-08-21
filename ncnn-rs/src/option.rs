@@ -8,9 +8,8 @@ pub struct Option {
 unsafe impl Send for Option {}
 
 impl Option {
-    pub fn new() -> Option {
-        let ptr = unsafe { ncnn_option_create() };
-        Option { ptr }
+    pub fn new() -> Self {
+        Self::default()
     }
 
     pub fn set_num_threads(&mut self, num_threads: u32) {
@@ -35,6 +34,14 @@ impl Option {
 
     pub(crate) fn ptr(&self) -> ncnn_option_t {
         self.ptr
+    }
+}
+
+impl Default for Option {
+    fn default() -> Self {
+        Self {
+            ptr: unsafe { ncnn_option_create() },
+        }
     }
 }
 
