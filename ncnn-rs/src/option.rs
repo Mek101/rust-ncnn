@@ -5,6 +5,8 @@ pub struct Option {
     ptr: ncnn_option_t,
 }
 
+unsafe impl Send for Option {}
+
 impl Option {
     pub fn new() -> Option {
         let ptr;
