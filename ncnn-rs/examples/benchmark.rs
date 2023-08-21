@@ -5,8 +5,7 @@ use ncnn_rs::Option as ncnn_option;
 use std::time;
 
 fn param_path() -> std::path::PathBuf {
-    let path = std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR"));
-    path
+    std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR"))
 }
 
 fn benchmark(name: &str, mut mat_in: Mat, opt: &ncnn_option, out: &str) -> anyhow::Result<()> {
@@ -20,7 +19,7 @@ fn benchmark(name: &str, mut mat_in: Mat, opt: &ncnn_option, out: &str) -> anyho
 
     let dr = DataReader::empty();
 
-    let mut net = NetBuilder::new()?
+    let mut net = NetBuilder::new()
         .set_option(opt)
         .set_param_path(path)?
         .set_model_datareader(dr)

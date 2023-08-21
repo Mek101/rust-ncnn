@@ -2,6 +2,7 @@ use crate::datareader::DataReader;
 use crate::Extractor;
 use ncnn_bind::*;
 use std::ffi::{CString, OsStr};
+#[cfg(target_family = "unix")]
 use std::os::unix::ffi::OsStrExt;
 
 enum LoadMethod {
@@ -29,15 +30,8 @@ impl NetBuilder {
         CString::new(src.to_string_lossy().as_bytes()).ok()
     }
 
-    pub fn new() -> anyhow::Result<NetBuilder> {
-        let ptr = unsafe { ncnn_net_create() };
-        anyhow::ensure!(!ptr.is_null(), "Could not create Net");
-
-        Ok(Self {
-            ptr: Some(ptr),
-            param: LoadMethod::None,
-            model: LoadMethod::None,
-        })
+    pub fn new() -> Self {
+        NetBuilder::default()
     }
 
     pub fn set_option(self, opt: &crate::option::Option) -> Self {
@@ -106,6 +100,18 @@ impl NetBuilder {
     }
 }
 
+impl Default for NetBuilder {
+    fn default() -> Self {
+        let ptr = unsafe { ncnn_net_create() };
+
+        Self {
+            ptr: Some(ptr),
+            param: LoadMethod::None,
+            model: LoadMethod::None,
+        }
+    }
+}
+
 impl Drop for NetBuilder {
     fn drop(&mut self) {
         if let Some(ptr) = self.ptr.take() {
@@ -119,6 +125,8 @@ pub struct Net {
 }
 
 unsafe impl Send for Net {}
+// See: https://github.com/Tencent/ncnn/issues/4774
+unsafe impl Sync for Net {}
 
 impl Net {
     pub fn create_extractor(&mut self) -> Extractor<'_> {
@@ -142,6 +150,7 @@ mod tests {
     fn is_send<T: Send>() -> bool {
         true
     }
+
     fn is_sync<T: Sync>() -> bool {
         true
     }
@@ -149,9 +158,10 @@ mod tests {
     #[test]
     fn load_not_exist_model() {
         let _ = NetBuilder::new()
+            .set_param_path("not_exist.param")
             .unwrap()
-            .set_param_path("not_exist.param").unwrap()
-            .set_model_path("not_exist.bin").unwrap()
+            .set_model_path("not_exist.bin")
+            .unwrap()
             .build()
             .map(|_| ())
             .expect_err("Expected files to not be found");
