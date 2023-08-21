@@ -1,109 +1,109 @@
 use crate::allocator::Allocator;
 use core::fmt;
 use ncnn_bind::*;
-use std::{os::raw::c_void};
+use std::os::raw::c_void;
 
 const PIXEL_CONVERT_SHIFT: u32 = 16;
 
 pub enum MatPixelType {
-    BGR,
-    BGRA,
-    GRAY,
-    RGB,
-    RGBA,
+    Bgr,
+    Bgra,
+    Gray,
+    Rgb,
+    Rgba,
 
-    RGBtoBGR,
-    RGBtoGRAY,
-    RGBtoRGBA,
-    RGBtoBGRA,
+    RgbToBgr,
+    RgbToGray,
+    RgbToRgba,
+    RgbToBgra,
 
-    BGRtoRGB,
-    BGRtoGRAY,
-    BGRtoRGBA,
-    BGRtoBGRA,
+    BgrToRgb,
+    BgrToGray,
+    BgrToRgba,
+    BgrToBgra,
 
-    GRAYtoRGB,
-    GRAYtoBGR,
-    GRAYtoRGBA,
-    GRAYtoBGRA,
+    GrayToRgb,
+    GrayToBgr,
+    GrayToRgba,
+    GrayToBgra,
 
-    RGBAtoRGB,
-    RGBAtoBGR,
-    RGBAtoGRAY,
-    RGBAtoBGRA,
+    RgbaToRgb,
+    RgbaToBgr,
+    RgbaToGray,
+    RgbaToBgra,
 
-    BGRAtoRGB,
-    BGRAtoBGR,
-    BGRAtoGRAY,
-    BGRAtoRGBA,
+    BgraToRgb,
+    BgraToBgr,
+    BgraToGray,
+    BgraToRgba,
 }
 
 impl MatPixelType {
     fn to_int(&self) -> i32 {
         match self {
-            MatPixelType::BGR => NCNN_MAT_PIXEL_BGR as _,
-            MatPixelType::BGRA => NCNN_MAT_PIXEL_BGRA as _,
-            MatPixelType::GRAY => NCNN_MAT_PIXEL_GRAY as _,
-            MatPixelType::RGB => NCNN_MAT_PIXEL_RGB as _,
-            MatPixelType::RGBA => NCNN_MAT_PIXEL_RGBA as _,
-            MatPixelType::RGBtoBGR => {
+            MatPixelType::Bgr => NCNN_MAT_PIXEL_BGR as _,
+            MatPixelType::Bgra => NCNN_MAT_PIXEL_BGRA as _,
+            MatPixelType::Gray => NCNN_MAT_PIXEL_GRAY as _,
+            MatPixelType::Rgb => NCNN_MAT_PIXEL_RGB as _,
+            MatPixelType::Rgba => NCNN_MAT_PIXEL_RGBA as _,
+            MatPixelType::RgbToBgr => {
                 (NCNN_MAT_PIXEL_RGB | (NCNN_MAT_PIXEL_BGR << PIXEL_CONVERT_SHIFT)) as _
             }
-            MatPixelType::RGBtoGRAY => {
+            MatPixelType::RgbToGray => {
                 (NCNN_MAT_PIXEL_RGB | (NCNN_MAT_PIXEL_GRAY << PIXEL_CONVERT_SHIFT)) as _
             }
-            MatPixelType::RGBtoRGBA => {
+            MatPixelType::RgbToRgba => {
                 (NCNN_MAT_PIXEL_RGB | (NCNN_MAT_PIXEL_RGBA << PIXEL_CONVERT_SHIFT)) as _
             }
-            MatPixelType::RGBtoBGRA => {
+            MatPixelType::RgbToBgra => {
                 (NCNN_MAT_PIXEL_RGB | (NCNN_MAT_PIXEL_BGRA << PIXEL_CONVERT_SHIFT)) as _
             }
-            MatPixelType::BGRtoRGB => {
+            MatPixelType::BgrToRgb => {
                 (NCNN_MAT_PIXEL_BGR | (NCNN_MAT_PIXEL_RGB << PIXEL_CONVERT_SHIFT)) as _
             }
-            MatPixelType::BGRtoGRAY => {
+            MatPixelType::BgrToGray => {
                 (NCNN_MAT_PIXEL_BGR | (NCNN_MAT_PIXEL_GRAY << PIXEL_CONVERT_SHIFT)) as _
             }
-            MatPixelType::BGRtoRGBA => {
+            MatPixelType::BgrToRgba => {
                 (NCNN_MAT_PIXEL_BGR | (NCNN_MAT_PIXEL_RGBA << PIXEL_CONVERT_SHIFT)) as _
             }
-            MatPixelType::BGRtoBGRA => {
+            MatPixelType::BgrToBgra => {
                 (NCNN_MAT_PIXEL_BGR | (NCNN_MAT_PIXEL_BGRA << PIXEL_CONVERT_SHIFT)) as _
             }
-            MatPixelType::GRAYtoRGB => {
+            MatPixelType::GrayToRgb => {
                 (NCNN_MAT_PIXEL_GRAY | (NCNN_MAT_PIXEL_RGB << PIXEL_CONVERT_SHIFT)) as _
             }
-            MatPixelType::GRAYtoBGR => {
+            MatPixelType::GrayToBgr => {
                 (NCNN_MAT_PIXEL_GRAY | (NCNN_MAT_PIXEL_BGR << PIXEL_CONVERT_SHIFT)) as _
             }
-            MatPixelType::GRAYtoRGBA => {
+            MatPixelType::GrayToRgba => {
                 (NCNN_MAT_PIXEL_GRAY | (NCNN_MAT_PIXEL_RGBA << PIXEL_CONVERT_SHIFT)) as _
             }
-            MatPixelType::GRAYtoBGRA => {
+            MatPixelType::GrayToBgra => {
                 (NCNN_MAT_PIXEL_GRAY | (NCNN_MAT_PIXEL_BGRA << PIXEL_CONVERT_SHIFT)) as _
             }
-            MatPixelType::RGBAtoRGB => {
+            MatPixelType::RgbaToRgb => {
                 (NCNN_MAT_PIXEL_RGBA | (NCNN_MAT_PIXEL_RGB << PIXEL_CONVERT_SHIFT)) as _
             }
-            MatPixelType::RGBAtoBGR => {
+            MatPixelType::RgbaToBgr => {
                 (NCNN_MAT_PIXEL_RGBA | (NCNN_MAT_PIXEL_BGR << PIXEL_CONVERT_SHIFT)) as _
             }
-            MatPixelType::RGBAtoGRAY => {
+            MatPixelType::RgbaToGray => {
                 (NCNN_MAT_PIXEL_RGBA | (NCNN_MAT_PIXEL_GRAY << PIXEL_CONVERT_SHIFT)) as _
             }
-            MatPixelType::RGBAtoBGRA => {
+            MatPixelType::RgbaToBgra => {
                 (NCNN_MAT_PIXEL_RGBA | (NCNN_MAT_PIXEL_BGRA << PIXEL_CONVERT_SHIFT)) as _
             }
-            MatPixelType::BGRAtoRGB => {
+            MatPixelType::BgraToRgb => {
                 (NCNN_MAT_PIXEL_BGRA | (NCNN_MAT_PIXEL_RGB << PIXEL_CONVERT_SHIFT)) as _
             }
-            MatPixelType::BGRAtoBGR => {
+            MatPixelType::BgraToBgr => {
                 (NCNN_MAT_PIXEL_BGRA | (NCNN_MAT_PIXEL_BGR << PIXEL_CONVERT_SHIFT)) as _
             }
-            MatPixelType::BGRAtoGRAY => {
+            MatPixelType::BgraToGray => {
                 (NCNN_MAT_PIXEL_BGRA | (NCNN_MAT_PIXEL_GRAY << PIXEL_CONVERT_SHIFT)) as _
             }
-            MatPixelType::BGRAtoRGBA => {
+            MatPixelType::BgraToRgba => {
                 (NCNN_MAT_PIXEL_BGRA | (NCNN_MAT_PIXEL_RGBA << PIXEL_CONVERT_SHIFT)) as _
             }
         }
@@ -111,31 +111,31 @@ impl MatPixelType {
 
     fn stride(&self) -> i32 {
         match self {
-            MatPixelType::BGR
-            | MatPixelType::BGRtoBGRA
-            | MatPixelType::BGRtoGRAY
-            | MatPixelType::BGRtoRGB
-            | MatPixelType::BGRtoRGBA => 3,
-            MatPixelType::BGRA
-            | MatPixelType::BGRAtoBGR
-            | MatPixelType::BGRAtoGRAY
-            | MatPixelType::BGRAtoRGB
-            | MatPixelType::BGRAtoRGBA => 4,
-            MatPixelType::GRAY
-            | MatPixelType::GRAYtoBGR
-            | MatPixelType::GRAYtoBGRA
-            | MatPixelType::GRAYtoRGB
-            | MatPixelType::GRAYtoRGBA => 1,
-            MatPixelType::RGB
-            | MatPixelType::RGBtoBGR
-            | MatPixelType::RGBtoBGRA
-            | MatPixelType::RGBtoGRAY
-            | MatPixelType::RGBtoRGBA => 3,
-            MatPixelType::RGBA
-            | MatPixelType::RGBAtoBGR
-            | MatPixelType::RGBAtoBGRA
-            | MatPixelType::RGBAtoGRAY
-            | MatPixelType::RGBAtoRGB => 4,
+            MatPixelType::Bgr => 3,
+            MatPixelType::Bgra => 4,
+            MatPixelType::Gray => 1,
+            MatPixelType::Rgb => 3,
+            MatPixelType::Rgba => 4,
+            MatPixelType::RgbToBgr => 3,
+            MatPixelType::RgbToGray => 3,
+            MatPixelType::RgbToRgba => 3,
+            MatPixelType::RgbToBgra => 3,
+            MatPixelType::BgrToRgb => 3,
+            MatPixelType::BgrToGray => 3,
+            MatPixelType::BgrToRgba => 3,
+            MatPixelType::BgrToBgra => 3,
+            MatPixelType::GrayToRgb => 1,
+            MatPixelType::GrayToBgr => 1,
+            MatPixelType::GrayToRgba => 1,
+            MatPixelType::GrayToBgra => 1,
+            MatPixelType::RgbaToRgb => 4,
+            MatPixelType::RgbaToBgr => 4,
+            MatPixelType::RgbaToGray => 4,
+            MatPixelType::RgbaToBgra => 4,
+            MatPixelType::BgraToRgb => 4,
+            MatPixelType::BgraToBgr => 4,
+            MatPixelType::BgraToGray => 4,
+            MatPixelType::BgraToRgba => 4,
         }
     }
 }
@@ -298,7 +298,7 @@ impl Mat {
         width: i32,
         height: i32,
         alloc: Option<&Allocator>,
-    ) -> anyhow::Result<Mat> {
+    ) -> anyhow::Result<Self> {
         let len = width * height * pixel_type.stride();
         if data.len() != len as _ {
             anyhow::bail!("Expected data length {}, provided {}", len, data.len());
@@ -327,7 +327,7 @@ impl Mat {
         target_width: i32,
         target_height: i32,
         alloc: Option<&Allocator>,
-    ) -> anyhow::Result<Mat> {
+    ) -> anyhow::Result<Self> {
         let len = width * height * pixel_type.stride();
         if data.len() != len as _ {
             anyhow::bail!("Expected data length {}, provided {}", len, data.len());
@@ -427,8 +427,8 @@ impl Mat {
         self.ptr
     }
 
-    pub(crate) fn mut_ptr(&mut self) -> *mut ncnn_mat_t {
-        &mut self.ptr
+    pub(crate) fn mut_ptr(&mut self) -> ncnn_mat_t {
+        self.ptr
     }
 }
 
@@ -464,7 +464,7 @@ impl Drop for Mat {
 
 #[cfg(test)]
 mod tests {
-    use crate::Mat;
+    use crate::{Mat, MatPixelType};
 
     #[test]
     fn basic_getter_and_setter() {
@@ -472,5 +472,39 @@ mod tests {
         assert_eq!(224, m.h());
         assert_eq!(224, m.w());
         assert_eq!(3, m.c());
+    }
+
+    #[test]
+    fn stride() {
+        assert_eq!(MatPixelType::Bgr.stride(), 3);
+        assert_eq!(MatPixelType::Bgra.stride(), 4);
+        assert_eq!(MatPixelType::Gray.stride(), 1);
+        assert_eq!(MatPixelType::Rgb.stride(), 3);
+        assert_eq!(MatPixelType::Rgba.stride(), 4);
+
+        assert_eq!(MatPixelType::RgbToBgr.stride(), 3);
+        assert_eq!(MatPixelType::RgbToGray.stride(), 3);
+        assert_eq!(MatPixelType::RgbToRgba.stride(), 3);
+        assert_eq!(MatPixelType::RgbToBgra.stride(), 3);
+
+        assert_eq!(MatPixelType::BgrToRgb.stride(), 3);
+        assert_eq!(MatPixelType::BgrToGray.stride(), 3);
+        assert_eq!(MatPixelType::BgrToRgba.stride(), 3);
+        assert_eq!(MatPixelType::BgrToBgra.stride(), 3);
+
+        assert_eq!(MatPixelType::GrayToRgb.stride(), 1);
+        assert_eq!(MatPixelType::GrayToBgr.stride(), 1);
+        assert_eq!(MatPixelType::GrayToRgba.stride(), 1);
+        assert_eq!(MatPixelType::GrayToBgra.stride(), 1);
+
+        assert_eq!(MatPixelType::RgbaToRgb.stride(), 4);
+        assert_eq!(MatPixelType::RgbaToBgr.stride(), 4);
+        assert_eq!(MatPixelType::RgbaToGray.stride(), 4);
+        assert_eq!(MatPixelType::RgbaToBgra.stride(), 4);
+
+        assert_eq!(MatPixelType::BgraToRgb.stride(), 4);
+        assert_eq!(MatPixelType::BgraToBgr.stride(), 4);
+        assert_eq!(MatPixelType::BgraToGray.stride(), 4);
+        assert_eq!(MatPixelType::BgraToRgba.stride(), 4);
     }
 }
