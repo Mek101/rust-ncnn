@@ -353,27 +353,34 @@ impl Mat {
         &mut self,
         mean_vals: Option<&[f32]>,
         norm_vals: Option<&[f32]>,
-    ) {
+    ) -> anyhow::Result<()> {
+        fn map_vals(vals: Option<&[f32]>, channels: usize) -> anyhow::Result<*const f32> {
+            match vals {
+                None => Ok(core::ptr::null_mut()),
+                Some(vals) => {
+                    if vals.len() < channels {
+                        Err(anyhow::anyhow!(
+                            "Expected data length {}, provided {}",
+                            channels,
+                            vals.len()
+                        ))
+                    } else {
+                        Ok(vals.as_ptr())
+                    }
+                }
+            }
+        }
+
         let channels = self.channels() as usize;
 
-        let mean_vals = match mean_vals {
-            Some(vals) => {
-                assert!(vals.len() >= channels);
-                vals.as_ptr()
-            }
-            None => core::ptr::null(),
-        };
-        let norm_vals = match norm_vals {
-            Some(vals) => {
-                assert!(vals.len() >= channels);
-                vals.as_ptr()
-            }
-            None => core::ptr::null(),
-        };
+        let mean_vals = map_vals(mean_vals, channels)?;
+        let norm_vals = map_vals(norm_vals, channels)?;
 
         unsafe {
             ncnn_mat_substract_mean_normalize(self.ptr, mean_vals, norm_vals);
         }
+
+        Ok(())
     }
 
     /// Fills matrix with a given value.
