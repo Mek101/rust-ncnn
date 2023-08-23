@@ -140,6 +140,24 @@ impl MatPixelType {
     }
 }
 
+pub enum MatBorderType {
+    Constant,
+    Replicate,
+    Reflect,
+    Transparent,
+}
+
+impl MatBorderType {
+    fn to_int(&self) -> i32 {
+        match self {
+            MatBorderType::Constant => 0,
+            MatBorderType::Replicate => 1,
+            MatBorderType::Reflect => 2,
+            MatBorderType::Transparent => -233,
+        }
+    }
+}
+
 pub struct Mat {
     ptr: ncnn_mat_t,
 }
@@ -389,6 +407,113 @@ impl Mat {
         Ok(())
     }
 
+    /// Add a padding border. Convenience method for copy_make_border.
+    pub fn add_border(
+        &mut self,
+        top: i32,
+        bottom: i32,
+        left: i32,
+        right: i32,
+        border_type: MatBorderType,
+        value: f32,
+        opt: &crate::option::Option,
+    ) {
+        unsafe {
+            let src = self.ptr;
+            let dst = ncnn_mat_create();
+            let border_type = border_type.to_int();
+            let opt = opt.ptr();
+            ncnn_copy_make_border(src, dst, top, bottom, left, right, border_type, value, opt);
+
+            self.ptr = dst;
+
+            ncnn_mat_destroy(src);
+        }
+    }
+
+    /// Add a padding border. Convenience method for copy_make_border_3d.
+    pub fn add_border_3d(
+        &mut self,
+        top: i32,
+        bottom: i32,
+        left: i32,
+        right: i32,
+        front: i32,
+        behind: i32,
+        border_type: MatBorderType,
+        value: f32,
+        opt: &crate::option::Option,
+    ) {
+        unsafe {
+            let src = self.ptr();
+            let dst = ncnn_mat_create();
+            let border_type = border_type.to_int();
+            let opt = opt.ptr();
+
+            ncnn_copy_make_border_3d(
+                src,
+                dst,
+                top,
+                bottom,
+                left,
+                right,
+                front,
+                behind,
+                border_type,
+                value,
+                opt,
+            );
+
+            self.ptr = dst;
+
+            ncnn_mat_destroy(src);
+        }
+    }
+
+    pub fn cut_border(
+        &mut self,
+        top: i32,
+        bottom: i32,
+        left: i32,
+        right: i32,
+        opt: &crate::option::Option,
+    ) {
+        unsafe {
+            let src = self.ptr;
+            let dst = ncnn_mat_create();
+            let opt = opt.ptr();
+
+            ncnn_copy_cut_border(src, dst, top, bottom, left, right, opt);
+
+            self.ptr = dst;
+
+            ncnn_mat_destroy(src);
+        }
+    }
+
+    pub fn cut_border_3d(
+        &mut self,
+        top: i32,
+        bottom: i32,
+        left: i32,
+        right: i32,
+        front: i32,
+        behind: i32,
+        opt: &crate::option::Option,
+    ) {
+        unsafe {
+            let src = self.ptr;
+            let dst = ncnn_mat_create();
+            let opt = opt.ptr();
+
+            ncnn_copy_cut_border_3d(src, dst, top, bottom, left, right, front, behind, opt);
+
+            self.ptr = dst;
+
+            ncnn_mat_destroy(src);
+        }
+    }
+
     /// Fills matrix with a given value.
     pub fn fill(&mut self, value: f32) {
         unsafe { ncnn_mat_fill_float(self.ptr, value) };
@@ -472,6 +597,102 @@ impl Drop for Mat {
         unsafe {
             ncnn_mat_destroy(self.ptr);
         }
+    }
+}
+
+/// Add a padding border to src's content, copying it in dst.
+pub fn copy_make_border(
+    src: &Mat,
+    dst: &mut Mat,
+    top: i32,
+    bottom: i32,
+    left: i32,
+    right: i32,
+    border_type: MatBorderType,
+    value: f32,
+    opt: &crate::option::Option,
+) {
+    unsafe {
+        let src = src.ptr();
+        let dst = dst.mut_ptr();
+        let border_type = border_type.to_int();
+        let opt = opt.ptr();
+
+        ncnn_copy_make_border(src, dst, top, bottom, left, right, border_type, value, opt);
+    }
+}
+
+/// Add a 3d padding border to src's content, copying it in dst.
+pub fn copy_make_border_3d(
+    src: &Mat,
+    dst: &mut Mat,
+    top: i32,
+    bottom: i32,
+    left: i32,
+    right: i32,
+    front: i32,
+    behind: i32,
+    border_type: MatBorderType,
+    value: f32,
+    opt: &crate::option::Option,
+) {
+    unsafe {
+        let src = src.ptr();
+        let dst = dst.mut_ptr();
+        let border_type = border_type.to_int();
+        let opt = opt.ptr();
+
+        ncnn_copy_make_border_3d(
+            src,
+            dst,
+            top,
+            bottom,
+            left,
+            right,
+            front,
+            behind,
+            border_type,
+            value,
+            opt,
+        );
+    }
+}
+
+pub fn copy_cut_border(
+    src: &Mat,
+    dst: &mut Mat,
+    top: i32,
+    bottom: i32,
+    left: i32,
+    right: i32,
+    opt: &crate::option::Option,
+) {
+    unsafe {
+        let src = src.ptr();
+        let dst = dst.mut_ptr();
+        let opt = opt.ptr();
+
+        ncnn_copy_cut_border(src, dst, top, bottom, left, right, opt);
+    }
+}
+
+pub fn copy_cut_border_3d(
+    src: &Mat,
+    dst: &mut Mat,
+    top: i32,
+    bottom: i32,
+    left: i32,
+    right: i32,
+    front: i32,
+    behind: i32,
+    opt: &crate::option::Option,
+) {
+    unsafe {
+        let src = src.ptr();
+        let dst = dst.mut_ptr();
+        let opt = opt.ptr();
+
+        ncnn_copy_cut_border_3d(src, dst, top, bottom, left, right, front, behind, opt);
     }
 }
 
