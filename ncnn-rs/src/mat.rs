@@ -349,12 +349,12 @@ impl Mat {
         })
     }
 
-    pub fn substract_mean_normalize(
+    pub fn subtract_mean_normalize(
         &mut self,
         mean_vals: Option<&[f32]>,
         norm_vals: Option<&[f32]>,
     ) {
-        let channels = self.c() as usize;
+        let channels = self.channels() as usize;
 
         let mean_vals = match mean_vals {
             Some(vals) => {
@@ -382,39 +382,39 @@ impl Mat {
     }
 
     /// Returns number of matrix dimensions.
-    pub fn dims(&self) -> i32 {
+    pub fn dimensions(&self) -> i32 {
         unsafe { ncnn_mat_get_dims(self.ptr) }
     }
 
     /// Returns matrix width.
-    pub fn w(&self) -> i32 {
+    pub fn width(&self) -> i32 {
         unsafe { ncnn_mat_get_w(self.ptr) }
     }
 
     /// Returns matrix height.
-    pub fn h(&self) -> i32 {
+    pub fn height(&self) -> i32 {
         unsafe { ncnn_mat_get_h(self.ptr) }
     }
 
     /// Returns matrix depth.
-    pub fn d(&self) -> i32 {
+    pub fn depth(&self) -> i32 {
         unsafe { ncnn_mat_get_d(self.ptr) }
     }
 
     /// Returns matrix channels.
-    pub fn c(&self) -> i32 {
+    pub fn channels(&self) -> i32 {
         unsafe { ncnn_mat_get_c(self.ptr) }
     }
 
-    pub fn elemsize(&self) -> u64 {
+    pub fn element_size(&self) -> u64 {
         (unsafe { ncnn_mat_get_elemsize(self.ptr) }) as u64
     }
 
-    pub fn elempack(&self) -> i32 {
+    pub fn element_packing(&self) -> i32 {
         unsafe { ncnn_mat_get_elempack(self.ptr) }
     }
 
-    pub fn cstep(&self) -> u64 {
+    pub fn channel_step(&self) -> u64 {
         unsafe { ncnn_mat_get_cstep(self.ptr) }
     }
 
@@ -443,13 +443,13 @@ impl Default for Mat {
 impl fmt::Debug for Mat {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         f.debug_struct("Mat")
-            .field("dims", &self.dims())
-            .field("c", &self.c())
-            .field("h", &self.h())
-            .field("w", &self.w())
-            .field("elemsize", &self.elemsize())
-            .field("elempack", &self.elempack())
-            .field("cstep", &self.cstep())
+            .field("dimensions", &self.dimensions())
+            .field("channels", &self.channels())
+            .field("height", &self.height())
+            .field("width", &self.width())
+            .field("element_size", &self.element_size())
+            .field("element_packing", &self.element_packing())
+            .field("channel_step", &self.channel_step())
             .finish()
     }
 }
@@ -469,9 +469,9 @@ mod tests {
     #[test]
     fn basic_getter_and_setter() {
         let m: Mat = Mat::new_3d(224, 224, 3, None);
-        assert_eq!(224, m.h());
-        assert_eq!(224, m.w());
-        assert_eq!(3, m.c());
+        assert_eq!(224, m.height());
+        assert_eq!(224, m.width());
+        assert_eq!(3, m.channels());
     }
 
     #[test]
