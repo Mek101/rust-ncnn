@@ -50,77 +50,77 @@ fn main() -> anyhow::Result<()> {
 
     benchmark(
         "squeezenet.param",
-        Mat::new_3d(227, 227, 3, None),
+        Mat::new_3d(227, 227, 3, None)?,
         &opt,
         "output",
     )?;
 
     benchmark(
         "squeezenet_int8.param",
-        Mat::new_3d(227, 227, 3, None),
+        Mat::new_3d(227, 227, 3, None)?,
         &opt,
         "output",
     )?;
 
     benchmark(
         "mobilenet.param",
-        Mat::new_3d(224, 224, 3, None),
+        Mat::new_3d(224, 224, 3, None)?,
         &opt,
         "output",
     )?;
 
     benchmark(
         "mobilenet_int8.param",
-        Mat::new_3d(224, 224, 3, None),
+        Mat::new_3d(224, 224, 3, None)?,
         &opt,
         "output",
     )?;
 
     benchmark(
         "mobilenet_v2.param",
-        Mat::new_3d(224, 224, 3, None),
+        Mat::new_3d(224, 224, 3, None)?,
         &opt,
         "output",
     )?;
 
     benchmark(
         "mobilenet_v3.param",
-        Mat::new_3d(224, 224, 3, None),
+        Mat::new_3d(224, 224, 3, None)?,
         &opt,
         "output",
     )?;
 
     benchmark(
         "shufflenet.param",
-        Mat::new_3d(224, 224, 3, None),
+        Mat::new_3d(224, 224, 3, None)?,
         &opt,
         "output",
     )?;
 
     benchmark(
         "shufflenet_v2.param",
-        Mat::new_3d(224, 224, 3, None),
+        Mat::new_3d(224, 224, 3, None)?,
         &opt,
         "output",
     )?;
 
     benchmark(
         "mnasnet.param",
-        Mat::new_3d(224, 224, 3, None),
+        Mat::new_3d(224, 224, 3, None)?,
         &opt,
         "output",
     )?;
 
     benchmark(
         "proxylessnasnet.param",
-        Mat::new_3d(224, 224, 3, None),
+        Mat::new_3d(224, 224, 3, None)?,
         &opt,
         "output",
     )?;
 
     benchmark(
         "efficientnet_b0.param",
-        Mat::new_3d(224, 224, 3, None),
+        Mat::new_3d(224, 224, 3, None)?,
         &opt,
         "output",
     )?;
@@ -129,140 +129,140 @@ fn main() -> anyhow::Result<()> {
 
     benchmark(
         "regnety_400m.param",
-        Mat::new_3d(224, 224, 3, None),
+        Mat::new_3d(224, 224, 3, None)?,
         &opt,
         "output",
     )?;
 
     benchmark(
         "blazeface.param",
-        Mat::new_3d(128, 128, 3, None),
+        Mat::new_3d(128, 128, 3, None)?,
         &opt,
         "output",
     )?;
 
     benchmark(
         "googlenet.param",
-        Mat::new_3d(224, 224, 3, None),
+        Mat::new_3d(224, 224, 3, None)?,
         &opt,
         "output",
     )?;
 
     benchmark(
         "googlenet_int8.param",
-        Mat::new_3d(224, 224, 3, None),
+        Mat::new_3d(224, 224, 3, None)?,
         &opt,
         "output",
     )?;
 
     benchmark(
         "resnet18.param",
-        Mat::new_3d(224, 224, 3, None),
+        Mat::new_3d(224, 224, 3, None)?,
         &opt,
         "output",
     )?;
 
     benchmark(
         "resnet18_int8.param",
-        Mat::new_3d(224, 224, 3, None),
+        Mat::new_3d(224, 224, 3, None)?,
         &opt,
         "output",
     )?;
 
     benchmark(
         "alexnet.param",
-        Mat::new_3d(227, 227, 3, None),
+        Mat::new_3d(227, 227, 3, None)?,
         &opt,
         "output",
     )?;
 
     benchmark(
         "vgg16.param",
-        Mat::new_3d(224, 224, 3, None),
+        Mat::new_3d(224, 224, 3, None)?,
         &opt,
         "output",
     )?;
 
     benchmark(
         "vgg16_int8.param",
-        Mat::new_3d(224, 224, 3, None),
+        Mat::new_3d(224, 224, 3, None)?,
         &opt,
         "output",
     )?;
 
     benchmark(
         "resnet50.param",
-        Mat::new_3d(224, 224, 3, None),
+        Mat::new_3d(224, 224, 3, None)?,
         &opt,
         "output",
     )?;
 
     benchmark(
         "resnet50_int8.param",
-        Mat::new_3d(224, 224, 3, None),
+        Mat::new_3d(224, 224, 3, None)?,
         &opt,
         "output",
     )?;
 
     benchmark(
         "squeezenet_ssd.param",
-        Mat::new_3d(300, 300, 3, None),
+        Mat::new_3d(300, 300, 3, None)?,
         &opt,
         "output",
     )?;
 
     benchmark(
         "squeezenet_ssd_int8.param",
-        Mat::new_3d(300, 300, 3, None),
+        Mat::new_3d(300, 300, 3, None)?,
         &opt,
         "output",
     )?;
 
     benchmark(
         "mobilenet_ssd.param",
-        Mat::new_3d(300, 300, 3, None),
+        Mat::new_3d(300, 300, 3, None)?,
         &opt,
         "output",
     )?;
 
     benchmark(
         "mobilenet_ssd_int8.param",
-        Mat::new_3d(300, 300, 3, None),
+        Mat::new_3d(300, 300, 3, None)?,
         &opt,
         "output",
     )?;
 
     benchmark(
         "mobilenet_yolo.param",
-        Mat::new_3d(416, 416, 3, None),
+        Mat::new_3d(416, 416, 3, None)?,
         &opt,
         "output",
     )?;
 
     benchmark(
         "mobilenetv2_yolov3.param",
-        Mat::new_3d(352, 352, 3, None),
+        Mat::new_3d(352, 352, 3, None)?,
         &opt,
         "output",
     )?;
 
     benchmark(
         "yolov4-tiny.param",
-        Mat::new_3d(416, 416, 3, None),
+        Mat::new_3d(416, 416, 3, None)?,
         &opt,
         "output",
     )?;
 
     benchmark(
         "nanodet-plus-m_416.param",
-        Mat::new_3d(416, 416, 3, None),
+        Mat::new_3d(416, 416, 3, None)?,
         &opt,
         "output",
     )?;
 
     benchmark(
         "nanodet-plus-m_416-int8.param",
-        Mat::new_3d(416, 416, 3, None),
+        Mat::new_3d(416, 416, 3, None)?,
         &opt,
         "output",
     )?;
