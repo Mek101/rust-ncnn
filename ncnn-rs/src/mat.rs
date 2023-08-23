@@ -300,9 +300,12 @@ impl Mat {
         alloc: Option<&Allocator>,
     ) -> anyhow::Result<Self> {
         let len = width * height * pixel_type.stride();
-        if data.len() != len as _ {
-            anyhow::bail!("Expected data length {}, provided {}", len, data.len());
-        }
+        anyhow::ensure!(
+            data.len() != len as _,
+            "Expected data length {}, provided {}",
+            len,
+            data.len()
+        );
 
         Ok(Self {
             ptr: unsafe {
@@ -329,9 +332,12 @@ impl Mat {
         alloc: Option<&Allocator>,
     ) -> anyhow::Result<Self> {
         let len = width * height * pixel_type.stride();
-        if data.len() != len as _ {
-            anyhow::bail!("Expected data length {}, provided {}", len, data.len());
-        }
+        anyhow::ensure!(
+            data.len() != len as _,
+            "Expected data length {}, provided {}",
+            len,
+            data.len()
+        );
 
         Ok(Self {
             ptr: unsafe {
