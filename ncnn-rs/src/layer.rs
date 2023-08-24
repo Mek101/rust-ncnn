@@ -11,10 +11,10 @@ pub struct LayerId(i32);
 
 #[derive(Clone, Copy, Default)]
 pub struct LayerShape {
-    dims: i32,
-    width: i32,
-    height: i32,
-    channels: i32,
+    dims: u32,
+    width: u32,
+    height: u32,
+    channels: u32,
 }
 
 pub struct Layer {
@@ -124,48 +124,50 @@ impl Layer {
         unsafe { ncnn_layer_set_support_image_storage(self.ptr, enable as i32) }
     }
 
-    pub fn bottom_len(&self) -> i32 {
-        unsafe { ncnn_layer_get_bottom_count(self.ptr) }
+    pub fn bottom_len(&self) -> u32 {
+        unsafe { ncnn_layer_get_bottom_count(self.ptr) as _ }
     }
 
-    pub fn top_len(&self) -> i32 {
-        unsafe { ncnn_layer_get_top_count(self.ptr) }
+    pub fn top_len(&self) -> u32 {
+        unsafe { ncnn_layer_get_top_count(self.ptr) as _ }
     }
 
-    pub fn bottom(&self, index: i32) -> Option<i32> {
+    pub fn bottom(&self, index: u32) -> Option<u32> {
+        let index: i32 = index.try_into().ok()?;
         unsafe {
             let size = ncnn_layer_get_bottom_count(self.ptr);
-            if index >= 0 && index < size {
-                Some(ncnn_layer_get_bottom(self.ptr, index))
+            if index < size {
+                Some(ncnn_layer_get_bottom(self.ptr, index) as _)
             } else {
                 None
             }
         }
     }
 
-    pub fn top(&self, index: i32) -> Option<i32> {
+    pub fn top(&self, index: u32) -> Option<u32> {
+        let index: i32 = index.try_into().ok()?;
         unsafe {
             let size = ncnn_layer_get_top_count(self.ptr);
-            if index >= 0 && index < size {
-                Some(ncnn_layer_get_top(self.ptr, index))
+            if index < size {
+                Some(ncnn_layer_get_top(self.ptr, index) as _)
             } else {
                 None
             }
         }
     }
 
-    pub unsafe fn bottom_unchecked(&self, index: i32) -> i32 {
-        ncnn_layer_get_bottom(self.ptr, index)
+    pub unsafe fn bottom_unchecked(&self, index: u32) -> u32 {
+        ncnn_layer_get_bottom(self.ptr, index as _) as _
     }
 
-    pub unsafe fn top_unchecked(&self, index: i32) -> i32 {
-        ncnn_layer_get_top(self.ptr, index)
+    pub unsafe fn top_unchecked(&self, index: u32) -> u32 {
+        ncnn_layer_get_top(self.ptr, index as _) as _
     }
 
-    pub fn blob_bottom_shape(&self, index: i32) -> Option<LayerShape> {
+    pub fn blob_bottom_shape(&self, index: u32) -> Option<LayerShape> {
         unsafe {
-            let size = ncnn_layer_get_bottom_count(self.ptr);
-            if index >= 0 && index < size {
+            let size = ncnn_layer_get_bottom_count(self.ptr) as _;
+            if index < size {
                 Some(self.blob_bottom_shape_unchecked(index))
             } else {
                 None
@@ -173,10 +175,10 @@ impl Layer {
         }
     }
 
-    pub fn blob_top_shape(&self, index: i32) -> Option<LayerShape> {
+    pub fn blob_top_shape(&self, index: u32) -> Option<LayerShape> {
         unsafe {
-            let size = ncnn_layer_get_top_count(self.ptr);
-            if index >= 0 && index < size {
+            let size = ncnn_layer_get_top_count(self.ptr) as _;
+            if index < size {
                 Some(self.blob_top_shape_unchecked(index))
             } else {
                 None
@@ -184,29 +186,29 @@ impl Layer {
         }
     }
 
-    pub unsafe fn blob_bottom_shape_unchecked(&self, index: i32) -> LayerShape {
+    pub unsafe fn blob_bottom_shape_unchecked(&self, index: u32) -> LayerShape {
         let mut shape = LayerShape::default();
         ncnn_blob_get_bottom_shape(
             self.ptr,
-            index,
-            &mut shape.dims as *mut _,
-            &mut shape.width as *mut _,
-            &mut shape.height as *mut _,
-            &mut shape.channels as *mut _,
+            index as _,
+            &mut shape.dims as *mut _ as _,
+            &mut shape.width as *mut _ as _,
+            &mut shape.height as *mut _ as _,
+            &mut shape.channels as *mut _ as _,
         );
 
         shape
     }
 
-    pub unsafe fn blob_top_shape_unchecked(&self, index: i32) -> LayerShape {
+    pub unsafe fn blob_top_shape_unchecked(&self, index: u32) -> LayerShape {
         let mut shape = LayerShape::default();
         ncnn_blob_get_top_shape(
             self.ptr,
-            index,
-            &mut shape.dims as *mut _,
-            &mut shape.width as *mut _,
-            &mut shape.height as *mut _,
-            &mut shape.channels as *mut _,
+            index as _,
+            &mut shape.dims as *mut _ as _,
+            &mut shape.width as *mut _ as _,
+            &mut shape.height as *mut _ as _,
+            &mut shape.channels as *mut _ as _,
         );
 
         shape

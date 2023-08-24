@@ -158,7 +158,7 @@ impl BorderType {
     }
 }
 
-fn cast_into_i32(val: usize, name: &str) -> anyhow::Result<i32> {
+fn cast_into_i32(val: u32, name: &str) -> anyhow::Result<i32> {
     val.try_into()
         .map_err(|_| anyhow::format_err!("Invalid {} size", name))
 }
@@ -177,7 +177,7 @@ impl Mat {
     }
 
     /// Constructs an empty 1D matrix.
-    pub fn new_1d(width: usize, alloc: Option<&Allocator>) -> anyhow::Result<Self> {
+    pub fn new_1d(width: u32, alloc: Option<&Allocator>) -> anyhow::Result<Self> {
         let w = cast_into_i32(width, "width")?;
 
         Ok(Self {
@@ -191,7 +191,7 @@ impl Mat {
     }
 
     /// Constructs an empty 2D matrix.
-    pub fn new_2d(width: usize, height: usize, alloc: Option<&Allocator>) -> anyhow::Result<Self> {
+    pub fn new_2d(width: u32, height: u32, alloc: Option<&Allocator>) -> anyhow::Result<Self> {
         let w = cast_into_i32(width, "width")?;
         let h = cast_into_i32(height, "height")?;
 
@@ -208,9 +208,9 @@ impl Mat {
 
     /// Constructs an empty 3D matrix.
     pub fn new_3d(
-        width: usize,
-        height: usize,
-        channels: usize,
+        width: u32,
+        height: u32,
+        channels: u32,
         alloc: Option<&Allocator>,
     ) -> anyhow::Result<Self> {
         let w = cast_into_i32(width, "width")?;
@@ -231,10 +231,10 @@ impl Mat {
 
     /// Constructs an empty 4D matrix.
     pub fn new_4d(
-        width: usize,
-        height: usize,
-        channels: usize,
-        depth: usize,
+        width: u32,
+        height: u32,
+        channels: u32,
+        depth: u32,
         alloc: Option<&Allocator>,
     ) -> anyhow::Result<Self> {
         let w = cast_into_i32(width, "width")?;
@@ -261,7 +261,7 @@ impl Mat {
     ///
     /// Data pointer must not be aliased, it must be valid for the entire lifetime of Mat and it must be of correct size.
     pub unsafe fn new_external_1d(
-        width: usize,
+        width: u32,
         data: *mut c_void,
         alloc: Option<&Allocator>,
     ) -> anyhow::Result<Self> {
@@ -282,8 +282,8 @@ impl Mat {
     ///
     /// Data pointer must not be aliased, it must be valid for the entire lifetime of Mat and it must be of correct size.
     pub unsafe fn new_external_2d(
-        width: usize,
-        height: usize,
+        width: u32,
+        height: u32,
         data: *mut c_void,
         alloc: Option<&Allocator>,
     ) -> anyhow::Result<Self> {
@@ -306,9 +306,9 @@ impl Mat {
     ///
     /// Data pointer must not be aliased, it must be valid for the entire lifetime of Mat and it must be of correct size.
     pub unsafe fn new_external_3d(
-        width: usize,
-        height: usize,
-        channels: usize,
+        width: u32,
+        height: u32,
+        channels: u32,
         data: *mut c_void,
         alloc: Option<&Allocator>,
     ) -> anyhow::Result<Self> {
@@ -333,10 +333,10 @@ impl Mat {
     ///
     /// Data pointer must not be aliased, it must be valid for the entire lifetime of Mat and it must be of correct size.
     pub unsafe fn new_external_4d(
-        width: usize,
-        height: usize,
-        depth: usize,
-        channels: usize,
+        width: u32,
+        height: u32,
+        depth: u32,
+        channels: u32,
         data: *mut c_void,
         alloc: Option<&Allocator>,
     ) -> anyhow::Result<Self> {
@@ -361,8 +361,8 @@ impl Mat {
     pub fn from_pixels(
         data: &[u8],
         pixel_type: PixelType,
-        width: usize,
-        height: usize,
+        width: u32,
+        height: u32,
         alloc: Option<&Allocator>,
     ) -> anyhow::Result<Self> {
         let width = cast_into_i32(width, "width")?;
@@ -394,10 +394,10 @@ impl Mat {
     pub fn from_pixels_resize(
         data: &[u8],
         pixel_type: PixelType,
-        width: usize,
-        height: usize,
-        target_width: usize,
-        target_height: usize,
+        width: u32,
+        height: u32,
+        target_width: u32,
+        target_height: u32,
         alloc: Option<&Allocator>,
     ) -> anyhow::Result<Self> {
         let width = cast_into_i32(width, "width")?;
@@ -466,10 +466,10 @@ impl Mat {
     /// Add a padding border. Convenience method for copy_make_border.
     pub fn add_border(
         &mut self,
-        top: usize,
-        bottom: usize,
-        left: usize,
-        right: usize,
+        top: u32,
+        bottom: u32,
+        left: u32,
+        right: u32,
         border_type: BorderType,
         value: f32,
         opt: &crate::option::Option,
@@ -496,12 +496,12 @@ impl Mat {
     /// Add a padding border. Convenience method for copy_make_border_3d.
     pub fn add_border_3d(
         &mut self,
-        top: usize,
-        bottom: usize,
-        left: usize,
-        right: usize,
-        front: usize,
-        behind: usize,
+        top: u32,
+        bottom: u32,
+        left: u32,
+        right: u32,
+        front: u32,
+        behind: u32,
         border_type: BorderType,
         value: f32,
         opt: &crate::option::Option,
@@ -542,10 +542,10 @@ impl Mat {
 
     pub fn cut_border(
         &mut self,
-        top: usize,
-        bottom: usize,
-        left: usize,
-        right: usize,
+        top: u32,
+        bottom: u32,
+        left: u32,
+        right: u32,
         opt: &crate::option::Option,
     ) -> anyhow::Result<()> {
         unsafe {
@@ -570,12 +570,12 @@ impl Mat {
 
     pub fn cut_border_3d(
         &mut self,
-        top: usize,
-        bottom: usize,
-        left: usize,
-        right: usize,
-        front: usize,
-        behind: usize,
+        top: u32,
+        bottom: u32,
+        left: u32,
+        right: u32,
+        front: u32,
+        behind: u32,
         opt: &crate::option::Option,
     ) -> anyhow::Result<()> {
         unsafe {
@@ -605,39 +605,39 @@ impl Mat {
     }
 
     /// Returns number of matrix dimensions.
-    pub fn dimensions(&self) -> usize {
+    pub fn dimensions(&self) -> u32 {
         unsafe { ncnn_mat_get_dims(self.ptr) as _ }
     }
 
     /// Returns matrix width.
-    pub fn width(&self) -> usize {
+    pub fn width(&self) -> u32 {
         unsafe { ncnn_mat_get_w(self.ptr) as _ }
     }
 
     /// Returns matrix height.
-    pub fn height(&self) -> usize {
+    pub fn height(&self) -> u32 {
         unsafe { ncnn_mat_get_h(self.ptr) as _ }
     }
 
     /// Returns matrix depth.
-    pub fn depth(&self) -> usize {
+    pub fn depth(&self) -> u32 {
         unsafe { ncnn_mat_get_d(self.ptr) as _ }
     }
 
     /// Returns matrix channels.
-    pub fn channels(&self) -> usize {
+    pub fn channels(&self) -> u32 {
         unsafe { ncnn_mat_get_c(self.ptr) as _ }
     }
 
-    pub fn element_size(&self) -> usize {
+    pub fn element_size(&self) -> u32 {
         unsafe { ncnn_mat_get_elemsize(self.ptr) as _ }
     }
 
-    pub fn element_packing(&self) -> usize {
+    pub fn element_packing(&self) -> u32 {
         unsafe { ncnn_mat_get_elempack(self.ptr) as _ }
     }
 
-    pub fn channel_step(&self) -> usize {
+    pub fn channel_step(&self) -> u32 {
         unsafe { ncnn_mat_get_cstep(self.ptr) as _ }
     }
 
@@ -689,10 +689,10 @@ impl Drop for Mat {
 pub fn copy_make_border(
     src: &Mat,
     dst: &mut Mat,
-    top: usize,
-    bottom: usize,
-    left: usize,
-    right: usize,
+    top: u32,
+    bottom: u32,
+    left: u32,
+    right: u32,
     border_type: BorderType,
     value: f32,
     opt: &crate::option::Option,
@@ -717,12 +717,12 @@ pub fn copy_make_border(
 pub fn copy_make_border_3d(
     src: &Mat,
     dst: &mut Mat,
-    top: usize,
-    bottom: usize,
-    left: usize,
-    right: usize,
-    front: usize,
-    behind: usize,
+    top: u32,
+    bottom: u32,
+    left: u32,
+    right: u32,
+    front: u32,
+    behind: u32,
     border_type: BorderType,
     value: f32,
     opt: &crate::option::Option,
@@ -760,10 +760,10 @@ pub fn copy_make_border_3d(
 pub fn copy_cut_border(
     src: &Mat,
     dst: &mut Mat,
-    top: usize,
-    bottom: usize,
-    left: usize,
-    right: usize,
+    top: u32,
+    bottom: u32,
+    left: u32,
+    right: u32,
     opt: &crate::option::Option,
 ) -> anyhow::Result<()> {
     unsafe {
@@ -784,12 +784,12 @@ pub fn copy_cut_border(
 pub fn copy_cut_border_3d(
     src: &Mat,
     dst: &mut Mat,
-    top: usize,
-    bottom: usize,
-    left: usize,
-    right: usize,
-    front: usize,
-    behind: usize,
+    top: u32,
+    bottom: u32,
+    left: u32,
+    right: u32,
+    front: u32,
+    behind: u32,
     opt: &crate::option::Option,
 ) -> anyhow::Result<()> {
     unsafe {
