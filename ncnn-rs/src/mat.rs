@@ -140,20 +140,20 @@ impl PixelType {
     }
 }
 
-pub enum MatBorderType {
+pub enum BorderType {
     Constant,
     Replicate,
     Reflect,
     Transparent,
 }
 
-impl MatBorderType {
+impl BorderType {
     fn to_int(&self) -> i32 {
         match self {
-            MatBorderType::Constant => 0,
-            MatBorderType::Replicate => 1,
-            MatBorderType::Reflect => 2,
-            MatBorderType::Transparent => -233,
+            BorderType::Constant => 0,
+            BorderType::Replicate => 1,
+            BorderType::Reflect => 2,
+            BorderType::Transparent => -233,
         }
     }
 }
@@ -470,7 +470,7 @@ impl Mat {
         bottom: usize,
         left: usize,
         right: usize,
-        border_type: MatBorderType,
+        border_type: BorderType,
         value: f32,
         opt: &crate::option::Option,
     ) -> anyhow::Result<()> {
@@ -502,7 +502,7 @@ impl Mat {
         right: usize,
         front: usize,
         behind: usize,
-        border_type: MatBorderType,
+        border_type: BorderType,
         value: f32,
         opt: &crate::option::Option,
     ) -> anyhow::Result<()> {
@@ -693,7 +693,7 @@ pub fn copy_make_border(
     bottom: usize,
     left: usize,
     right: usize,
-    border_type: MatBorderType,
+    border_type: BorderType,
     value: f32,
     opt: &crate::option::Option,
 ) -> anyhow::Result<()> {
@@ -723,7 +723,7 @@ pub fn copy_make_border_3d(
     right: usize,
     front: usize,
     behind: usize,
-    border_type: MatBorderType,
+    border_type: BorderType,
     value: f32,
     opt: &crate::option::Option,
 ) -> anyhow::Result<()> {
