@@ -811,7 +811,7 @@ pub fn copy_cut_border_3d(
 
 #[cfg(test)]
 mod tests {
-    use crate::Mat;
+    use super::*;
 
     #[test]
     fn basic_getter_and_setter() {
@@ -819,5 +819,39 @@ mod tests {
         assert_eq!(224, m.height());
         assert_eq!(224, m.width());
         assert_eq!(3, m.channels());
+    }
+
+    #[test]
+    fn stride() {
+        assert_eq!(MatPixelType::Bgr.stride(), 3);
+        assert_eq!(MatPixelType::Bgra.stride(), 4);
+        assert_eq!(MatPixelType::Gray.stride(), 1);
+        assert_eq!(MatPixelType::Rgb.stride(), 3);
+        assert_eq!(MatPixelType::Rgba.stride(), 4);
+
+        assert_eq!(MatPixelType::RgbToBgr.stride(), 3);
+        assert_eq!(MatPixelType::RgbToGray.stride(), 3);
+        assert_eq!(MatPixelType::RgbToRgba.stride(), 3);
+        assert_eq!(MatPixelType::RgbToBgra.stride(), 3);
+
+        assert_eq!(MatPixelType::BgrToRgb.stride(), 3);
+        assert_eq!(MatPixelType::BgrToGray.stride(), 3);
+        assert_eq!(MatPixelType::BgrToRgba.stride(), 3);
+        assert_eq!(MatPixelType::BgrToBgra.stride(), 3);
+
+        assert_eq!(MatPixelType::GrayToRgb.stride(), 1);
+        assert_eq!(MatPixelType::GrayToBgr.stride(), 1);
+        assert_eq!(MatPixelType::GrayToRgba.stride(), 1);
+        assert_eq!(MatPixelType::GrayToBgra.stride(), 1);
+
+        assert_eq!(MatPixelType::RgbaToRgb.stride(), 4);
+        assert_eq!(MatPixelType::RgbaToBgr.stride(), 4);
+        assert_eq!(MatPixelType::RgbaToGray.stride(), 4);
+        assert_eq!(MatPixelType::RgbaToBgra.stride(), 4);
+
+        assert_eq!(MatPixelType::BgraToRgb.stride(), 4);
+        assert_eq!(MatPixelType::BgraToBgr.stride(), 4);
+        assert_eq!(MatPixelType::BgraToGray.stride(), 4);
+        assert_eq!(MatPixelType::BgraToRgba.stride(), 4);
     }
 }
